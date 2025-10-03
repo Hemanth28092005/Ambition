@@ -775,45 +775,6 @@
         {
             "type": "Feature",
             "properties": {
-                "Name": "DIVIDER",
-                "description": null,
-                "timestamp": null,
-                "begin": null,
-                "end": null,
-                "area_sqm": 0.0,
-                "area_acres": 0.0,
-                "area_acres_recalculated": 0.0,
-                "scheme_eligibility": {
-                    "PM_Kisan_Maan_Dhan_Yojana": "Eligible (if age 18-40)",
-                    "PM_Kisan_Samman_Nidhi": "Eligible to Apply (Exclusions Apply)",
-                    "Soil_Health_Card_Scheme": "Eligible",
-                    "PM_Fasal_Bima_Yojana": "Eligible to Apply (for notified crops)",
-                    "Kisan_Credit_Card_Scheme": "Eligible to Apply"
-                }
-            },
-            "bbox": [
-                76.5178410152553,
-                12.7800191083556,
-                76.5192898642893,
-                12.7946732308514
-            ],
-            "geometry": {
-                "type": "LineString",
-                "coordinates": [
-                    [
-                        76.5192898642893,
-                        12.7946732308514
-                    ],
-                    [
-                        76.5178410152553,
-                        12.7800191083556
-                    ]
-                ]
-            }
-        },
-        {
-            "type": "Feature",
-            "properties": {
                 "Name": "POLISHETTY",
                 "description": null,
                 "timestamp": null,
@@ -13579,4 +13540,5 @@
             }
         }
     ]
+
 }
