@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>land.io - GeoJSON Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body, #map {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .title-bar {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.6);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      z-index: 999;
+    }
+  </style>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDciPsvdxOy-OnesSpduDg_g-mojbC-NGI"></script>
+</head>
+<body>
+  <div class="title-bar">land.io</div>
+  <div id="map"></div>
+
+  <script>
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: 12.7924, lng: 76.5220 }, // adjust based on your data
+        zoom: 17,
+        mapTypeId: "satellite"
+      });
+
+      const infoWindow = new google.maps.InfoWindow();
+
+      // Load external GeoJSON file
+      fetch("plots.json")
+        .then(response => response.json())
+        .then(data => {
+          map.data.addGeoJson(data);
+
+          // Style polygons
+          map.data.setStyle({
+            fillColor: "yellow",
+            strokeColor: "red",
+            strokeWeight: 2,
+            fillOpacity: 0.4
+          });
+
+          // Add click listener for popups
+          map.data.addListener("click", (event) => {
+            const props = event.feature.getProperty("scheme_eligibility");
+            let eligibilityText = "";
+            if (props) {
+              for (let scheme in props) {
+                eligibilityText += `<b>${scheme}:</b> ${props[scheme]}<br>`;
+              }
+            }
+
+            const content = `
+              <div style="font-size:14px;max-width:250px;">
+                <b>Name:</b> ${event.feature.getProperty("Name")}<br>
+                <b>Area (sqm):</b> ${event.feature.getProperty("area_sqm")}<br>
+                <b>Area (acres):</b> ${event.feature.getProperty("area_acres")}<br>
+                <b>Schemes:</b><br>${eligibilityText}
+              </div>
+            `;
+
+            infoWindow.setContent(content);
+            infoWindow.setPosition(event.latLng);
+            infoWindow.open(map);
+          });
+        })
+        .catch(err => console.error("Error loading GeoJSON:", err));
+    }
+
+    window.onload = initMap;
+  </script>
+</body>
+</html>
